@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 8 February 2024
+ * 19 February 2024
  * DatabaseManager.java
  * This class will present a menu for the user to navigate to display, add, edit,
  * or remove comics in a list of comics.

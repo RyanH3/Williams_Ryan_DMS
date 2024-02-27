@@ -99,7 +99,7 @@ public class Comic {
 
     /*
      * Method Name: print
-     * Purpose: Prints information about the comic
+     * Purpose: Prints information about the comic.
      * Parameters: none
      * Returns: nothing
      */

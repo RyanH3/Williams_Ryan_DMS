@@ -33,11 +33,9 @@ public class DatabaseManager {
         //Allow the user to edit a comic entry
         editComics(comics);
         printComics(comics);
-        pause();
 
         //Prints the comics with the pinned comic at the top.
         printComicsPinned(comics);
-        pause();
     }
 
     /*
@@ -281,6 +279,7 @@ public class DatabaseManager {
                 comic.print();
             }
         }
+        pause();
     }
 
     /*
@@ -322,6 +321,7 @@ public class DatabaseManager {
                     loopFlag = false;
                 } catch (InputMismatchException ime) {
                     System.out.println("Please input an integer.");
+                    scanner.nextLine();
                     pause();
                 }
             }

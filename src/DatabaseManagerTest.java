@@ -37,7 +37,7 @@ class DatabaseManagerTest {
     @DisplayName("Add Comics Test")
     void addComicsTest() {
         // check that comics are added to the list
-        assertEquals(comics.size(), 4, "Error: Wrong amount of comics added to the list.");
+        assertEquals(4, comics.size(), "Error: Wrong amount of comics added to the list.");
     }
 
     @org.junit.jupiter.api.Test

@@ -33,9 +33,11 @@ public class DatabaseManager {
         //Allow the user to edit a comic entry
         editComics(comics);
         printComics(comics);
+        pause();
 
         //Prints the comics with the pinned comic at the top.
         printComicsPinned(comics);
+        pause();
     }
 
     /*
@@ -44,7 +46,7 @@ public class DatabaseManager {
      * Parameters: ArrayList<Comic>
      * Returns: nothing
      */
-    public static void addComics(ArrayList<Comic> comics){
+    static void addComics(ArrayList<Comic> comics){
         Scanner scanner = new Scanner(System.in);
         scanner.useDelimiter("\n");
         boolean loopFlag = true;
@@ -67,6 +69,7 @@ public class DatabaseManager {
                 loopFlag = false;
             } catch (IOException e) {
                 System.out.println("File not found.");
+                pause();
             }
         }
     }
@@ -77,7 +80,7 @@ public class DatabaseManager {
      * Parameters: ArrayList<Comic>
      * Returns: nothing
      */
-    public static void editComics(ArrayList<Comic> comics) {
+    static void editComics(ArrayList<Comic> comics) {
         Scanner scanner = new Scanner(System.in);
         scanner.useDelimiter("\n");
         boolean loopFlag = true;
@@ -96,18 +99,20 @@ public class DatabaseManager {
                         found = true;
                         loopFlag = false;
                         comic.print();
+                        pause();
                     }
                 }
 
                 if (editTitle.equals("stop")) {
                     System.out.println("Moving on...");
                     loopFlag = false;
+                    pause();
                     continue;
                 }
 
                 if (!found) {
                     System.out.println("That comic was not found in the list.");
-                    scanner.nextLine();
+                    pause();
                 }
             }
 
@@ -135,6 +140,8 @@ public class DatabaseManager {
                     case "image":
                         System.out.println("Please type the new image link.");
                         comics.get(editedComicIndex).setImagePath(scanner.next());
+                        System.out.println("New image path set.");
+                        pause();
                         break;
                     case "2":
                     case "rating":
@@ -142,7 +149,9 @@ public class DatabaseManager {
                         while (loopFlag) {
                             try {
                                 comics.get(editedComicIndex).setRating(scanner.nextInt());
+                                System.out.println("Rating set to " + comics.get(editedComicIndex).getRating() + ".");
                                 loopFlag = false;
+                                pause();
                             } catch (InputMismatchException ime) {
                                 System.out.println("Please input an integer.");
                                 scanner.nextLine();
@@ -156,7 +165,9 @@ public class DatabaseManager {
                         while (loopFlag) {
                             try {
                                 comics.get(editedComicIndex).setCurrentChapter(scanner.nextInt());
+                                System.out.println("Current chapter set.");
                                 loopFlag = false;
+                                pause();
                             } catch (InputMismatchException ime) {
                                 System.out.println("Please input an integer.");
                                 scanner.nextLine();
@@ -170,7 +181,9 @@ public class DatabaseManager {
                         while (loopFlag) {
                             try {
                                 comics.get(editedComicIndex).setTotalChapters(scanner.nextInt());
+                                System.out.println("Total Chapters set.");
                                 loopFlag = false;
+                                pause();
                             } catch (InputMismatchException ime) {
                                 System.out.println("Please input an integer.");
                                 scanner.nextLine();
@@ -184,7 +197,9 @@ public class DatabaseManager {
                         while (loopFlag) {
                             try {
                                 comics.get(editedComicIndex).setCompleted(scanner.nextBoolean());
+                                System.out.println("Completed set.");
                                 loopFlag = false;
+                                pause();
                             } catch (InputMismatchException ime) {
                                 System.out.println("Please type \"true\" or \"false\".");
                                 scanner.nextLine();
@@ -198,7 +213,9 @@ public class DatabaseManager {
                         while (loopFlag) {
                             try {
                                 comics.get(editedComicIndex).setPinned(scanner.nextBoolean());
+                                System.out.println("Pin set.");
                                 loopFlag = false;
+                                pause();
                             } catch (InputMismatchException ime) {
                                 System.out.println("Please type \"true\" or \"false\".");
                                 scanner.nextLine();
@@ -210,13 +227,27 @@ public class DatabaseManager {
                     case "stop":
                         System.out.println("Moving on...");
                         loopFlag = false;
+                        pause();
                         break;
                     default:
                         System.out.println("Invalid selection. Please type the number or text of the attribute.");
+                        pause();
                         break;
                 }
             }
         }
+    }
+
+    /*
+     * Method Name: pause
+     * Purpose: Pauses the system until the user presses ENTER
+     * Parameters: none
+     * Returns: nothing
+     */
+    static void pause() {
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("Press ENTER to continue...");
+        myScanner.nextLine();
     }
 
     /*
@@ -225,7 +256,7 @@ public class DatabaseManager {
      * Parameters: ArrayList<Comic>
      * Returns: nothing
      */
-    public static void printComics(ArrayList<Comic> comics) {
+    static void printComics(ArrayList<Comic> comics) {
         System.out.println("Printing comics...");
         for (Comic comic : comics) {
             comic.print();
@@ -238,7 +269,7 @@ public class DatabaseManager {
      * Parameters: ArrayList<Comic>
      * Returns: nothing
      */
-    public static void printComicsPinned(ArrayList<Comic> comics) {
+    static void printComicsPinned(ArrayList<Comic> comics) {
         System.out.println("Printing comics (pinned comic first)...");
         for (Comic comic : comics) {
             if (comic.getPinned()) {
@@ -258,7 +289,7 @@ public class DatabaseManager {
      * Parameters: ArrayList<Comic>, String
      * Returns: nothing
      */
-    public static void removeComic(ArrayList<Comic> comics, String inputType) {
+    static void removeComic(ArrayList<Comic> comics, String inputType) {
         Scanner scanner = new Scanner(System.in);
         scanner.useDelimiter("\n");
 
@@ -269,8 +300,10 @@ public class DatabaseManager {
             boolean removed = comics.removeIf(comic -> (comic.getTitle().equals(title)));
             if (!removed) {
                 System.out.println("The comic you requested was not found.\n");
+                pause();
             } else {
-                System.out.println("Comic deleted.\n");
+                System.out.println("Comic deleted.");
+                pause();
             }
         } else if (inputType.equals("ID")) {
             boolean loopFlag = true;
@@ -281,13 +314,15 @@ public class DatabaseManager {
                     boolean removed = comics.removeIf(comic -> (comic.getId() == id));
                     if (!removed) {
                         System.out.println("The comic you requested was not found.\n");
+                        pause();
                     } else {
-                        System.out.println("Comic deleted.\n");
+                        System.out.println("Comic deleted.");
+                        pause();
                     }
                     loopFlag = false;
                 } catch (InputMismatchException ime) {
                     System.out.println("Please input an integer.");
-                    scanner.nextLine();
+                    pause();
                 }
             }
         }

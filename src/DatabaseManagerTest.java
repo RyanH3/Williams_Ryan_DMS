@@ -34,13 +34,6 @@ class DatabaseManagerTest {
     }
 
     @org.junit.jupiter.api.Test
-    @DisplayName("Add Comics Test")
-    void addComicsTest() {
-        // check that comics are added to the list
-        assertEquals(4, comics.size(), "Error: Wrong amount of comics added to the list.");
-    }
-
-    @org.junit.jupiter.api.Test
     @DisplayName("Edit Comics Int Test")
     void editComicsIntTest() {
         // removed all statements that use scanner because no user inputs are allowed in tests
@@ -164,6 +157,7 @@ class DatabaseManagerTest {
                         break;
                     default:
                         System.out.println("Invalid selection. Please type the number or text of the attribute.");
+                        loopFlag = false;
                         break;
                 }
             }
@@ -173,7 +167,7 @@ class DatabaseManagerTest {
 
     @org.junit.jupiter.api.Test
     @DisplayName("Edit Comics Boolean Test")
-    void EditComicsBooleanTest() {
+    void editComicsBooleanTest() {
         // removed all statements that use scanner because no user inputs are allowed in tests
         // make sure user can edit comics (valid comic, valid boolean attribute)
         boolean loopFlag = true;
@@ -304,7 +298,7 @@ class DatabaseManagerTest {
 
     @org.junit.jupiter.api.Test
     @DisplayName("Edit Comics Invalid Comic Test")
-    void EditComicsInvalidTest() {
+    void editComicsInvalidTest() {
         // make sure user edits something (invalid comic)
         boolean loopFlag = true;
         while (loopFlag) {

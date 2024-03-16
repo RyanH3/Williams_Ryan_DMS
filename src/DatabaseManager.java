@@ -13,11 +13,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DatabaseManager {
+    static ArrayList<Comic> comics = new ArrayList<>();
     public static void main(String[] args) {
-        ArrayList<Comic> comics = new ArrayList<>();
-
+        
         //Ask the user for a file name to add comics to the database.
-        addComics(comics);
+        addComics("C:\\Users\\repti\\IdeaProjects\\Williams_Ryan_DMS\\src\\myComics.txt");
 
         //Print the database to the screen
         printComics(comics);
@@ -44,14 +44,10 @@ public class DatabaseManager {
      * Parameters: ArrayList<Comic>
      * Returns: nothing
      */
-    static void addComics(ArrayList<Comic> comics){
-        Scanner scanner = new Scanner(System.in);
-        scanner.useDelimiter("\n");
+    static void addComics(String filePath){
         boolean loopFlag = true;
         while (loopFlag) {
             try {
-                System.out.println("Type the file path for your comic submission.");
-                String filePath = scanner.next();
                 File comicFile = new File(filePath);
                 Scanner fileScanner = new Scanner(comicFile);
 

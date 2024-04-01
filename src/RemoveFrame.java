@@ -1,3 +1,11 @@
+/*
+ * Ryan Williams
+ * CEN 3024C-26663 Software Development I
+ * 1 April 2024
+ * Comic.java
+ * This class creates a JFrame that allows a user to remove a preexisting comic.
+ */
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +33,8 @@ public class RemoveFrame {
         JTextField comicName = new JTextField(10);
         panel.add(comicName);
         JButton input = new JButton("Submit");
+
+        // Removes the comic the user types in when "Submit" is pressed
         input.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -35,8 +45,13 @@ public class RemoveFrame {
                         comicIndex = DatabaseManager.comics.indexOf(comic);
                     }
                 }
-                DatabaseManager.comics.remove(comicIndex);
-                frame.dispose();
+                if (comicIndex == -1) {
+                    JOptionPane.showMessageDialog(frame, "Comic not found.");
+                }
+                else {
+                    DatabaseManager.comics.remove(comicIndex);
+                    frame.dispose();
+                }
             }
         });
         panel.add(input);

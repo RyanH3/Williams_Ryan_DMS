@@ -1,6 +1,15 @@
+/*
+ * Ryan Williams
+ * CEN 3024C-26663 Software Development I
+ * 1 April 2024
+ * AddFrame.java
+ * This class creates a JFrame that lets the user add comics to their list.
+ */
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AddFrame {
@@ -29,7 +38,11 @@ public class AddFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String filePath = path.getText();
-                DatabaseManager.addComics(filePath);
+                try {
+                    DatabaseManager.addComics(filePath);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(frame, "File not found.");
+                }
                 frame.dispose();
             }
         });

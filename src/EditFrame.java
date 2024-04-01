@@ -1,3 +1,11 @@
+/*
+ * Ryan Williams
+ * CEN 3024C-26663 Software Development I
+ * 1 April 2024
+ * Comic.java
+ * This class creates a JFrame that allows a user to edit a preexisting comic.
+ */
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +35,7 @@ public class EditFrame {
         panel.add(comicName);
         JButton input = new JButton("Submit");
 
+        // Brings up the comic the user types in when "Submit" is pressed
         input.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,59 +56,95 @@ public class EditFrame {
                         comicIndex = DatabaseManager.comics.indexOf(comic);
                     }
                 }
-                JLabel imageLabel = null;
-                try {
-                    imageLabel = ComicFrame.loadImage(DatabaseManager.comics.get(comicIndex).getImagePath());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                if (comicIndex == -1) {
+                    JOptionPane.showMessageDialog(frame, "Comic not found.");
                 }
-                newPanel.add(imageLabel);
-                JLabel titleLabel = new JLabel(DatabaseManager.comics.get(comicIndex).getTitle());
-                newPanel.add(titleLabel);
-                JLabel authorLabel = new JLabel(DatabaseManager.comics.get(comicIndex).getAuthor());
-                newPanel.add(authorLabel);
-                JLabel completedLabel = new JLabel("Completed: ");
-                newPanel.add(completedLabel);
-                JTextField newCompleted = new JTextField(5);
-                newPanel.add(newCompleted);
-                JLabel ratingLabel = new JLabel("Rating:");
-                newPanel.add(ratingLabel);
-                JTextField newRating = new JTextField(3);
-                newPanel.add(newRating);
-                JLabel idLabel = new JLabel(Integer.toString(DatabaseManager.comics.get(comicIndex).getId()));
-                newPanel.add(idLabel);
-                JTextField newCurrentChapter = new JTextField(4);
-                newPanel.add(newCurrentChapter);
-                JLabel chapterLabel = new JLabel(" / ");
-                newPanel.add(chapterLabel);
-                JTextField newTotalChapters = new JTextField(4);
-                newPanel.add(newTotalChapters);
-                JLabel pinnedLabel = new JLabel("Pinned: ");
-                newPanel.add(pinnedLabel);
-                JTextField newPinned = new JTextField(5);
-                newPanel.add(newPinned);
-                JButton submit = new JButton("Submit");
-                submit.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        int comicIndex = -1;
-                        for (Comic comic : DatabaseManager.comics) {
-                            if (comic.getTitle().equals(editComic)) {
-                                comicIndex = DatabaseManager.comics.indexOf(comic);
-                            }
-                        }
-                        DatabaseManager.comics.get(comicIndex).setRating(Integer.parseInt(newRating.getText()));
-                        DatabaseManager.comics.get(comicIndex).setCurrentChapter(Integer.parseInt(newCurrentChapter.getText()));
-                        DatabaseManager.comics.get(comicIndex).setTotalChapters(Integer.parseInt(newTotalChapters.getText()));
-                        DatabaseManager.comics.get(comicIndex).setCompleted(Boolean.parseBoolean(newCompleted.getText()));
-                        DatabaseManager.comics.get(comicIndex).setPinned(Boolean.parseBoolean(newPinned.getText()));
-                        newFrame.dispose();
-                    }
-                });
-                newPanel.add(submit);
+                else {
 
-                newFrame.add(newPanel);
-                newFrame.setVisible(true);
+                    try {
+                        JLabel imageLabel = null;
+                        imageLabel = ComicFrame.loadImage(DatabaseManager.comics.get(comicIndex).getImagePath());
+                        newPanel.add(imageLabel);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(frame, "Image not found.");
+                    }
+
+                    JLabel titleLabel = new JLabel(DatabaseManager.comics.get(comicIndex).getTitle());
+                    newPanel.add(titleLabel);
+                    JLabel authorLabel = new JLabel("by " + DatabaseManager.comics.get(comicIndex).getAuthor());
+                    newPanel.add(authorLabel);
+                    JLabel completedLabel = new JLabel("Completed: ");
+                    newPanel.add(completedLabel);
+                    JTextField newCompleted = new JTextField(5);
+                    newPanel.add(newCompleted);
+                    JLabel ratingLabel = new JLabel("Rating:");
+                    newPanel.add(ratingLabel);
+                    JTextField newRating = new JTextField(3);
+                    newPanel.add(newRating);
+                    JLabel idLabel = new JLabel("ID: " + DatabaseManager.comics.get(comicIndex).getId());
+                    newPanel.add(idLabel);
+                    JLabel chapterLabel = new JLabel("Chapter ");
+                    newPanel.add(chapterLabel);
+                    JTextField newCurrentChapter = new JTextField(4);
+                    newPanel.add(newCurrentChapter);
+                    JLabel slashLabel = new JLabel(" / ");
+                    newPanel.add(slashLabel);
+                    JTextField newTotalChapters = new JTextField(4);
+                    newPanel.add(newTotalChapters);
+                    JLabel pinnedLabel = new JLabel("Pinned: ");
+                    newPanel.add(pinnedLabel);
+                    JTextField newPinned = new JTextField(5);
+                    newPanel.add(newPinned);
+                    JButton submit = new JButton("Submit");
+
+                    // Edits the comic with the user-submitted values when "Submit" is pressed
+                    submit.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            int comicIndex = -1;
+                            for (Comic comic : DatabaseManager.comics) {
+                                if (comic.getTitle().equals(editComic)) {
+                                    comicIndex = DatabaseManager.comics.indexOf(comic);
+                                }
+                            }
+
+                            try {
+                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "rating", newRating.getText());
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(frame, "Rating not set.");
+                            }
+
+                            try {
+                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "current chapter", newCurrentChapter.getText());
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(frame, "Current chapter not set.");
+                            }
+
+                            try {
+                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "total chapters", newTotalChapters.getText());
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(frame, "Total chapters not set.");
+                            }
+
+                            try {
+                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "completed", newCompleted.getText());
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(frame, "Completed not set.");
+                            }
+
+                            try {
+                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "pinned", newPinned.getText());
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(frame, "Pinned not set.");
+                            }
+                            newFrame.dispose();
+                        }
+                    });
+                    newPanel.add(submit);
+
+                    newFrame.add(newPanel);
+                    newFrame.setVisible(true);
+                }
             }
         });
 

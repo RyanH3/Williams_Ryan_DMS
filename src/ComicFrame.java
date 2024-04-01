@@ -1,3 +1,11 @@
+/*
+ * Ryan Williams
+ * CEN 3024C-26663 Software Development I
+ * 1 April 2024
+ * ComicFrame.java
+ * This class creates a JFrame that displays all the comics in the user's list.
+ */
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +32,7 @@ public class ComicFrame {
         this.frame.setResizable(true);
         panel = new JPanel();
 
+        // Print the pinned comic first
         for (Comic comic : DatabaseManager.comics) {
             if (comic.getPinned()) {
                 imageLabel = loadImage(comic.getImagePath());
@@ -44,8 +53,8 @@ public class ComicFrame {
                 pinnedLabel = new JLabel("Pinned: " + comic.getPinned());
                 panel.add(pinnedLabel);
             }
-
         }
+        // Print the unpinned comics
         for (Comic comic : DatabaseManager.comics) {
             if (!comic.getPinned()) {
                 imageLabel = loadImage(comic.getImagePath());
@@ -76,9 +85,20 @@ public class ComicFrame {
         this.frame.setVisible(true);
     }
 
+    /*
+     * Method Name: loadImage
+     * Purpose: Makes a JLabel with an image using the image's URL.
+     * Parameters: String
+     * Returns: JLabel
+     */
     public static JLabel loadImage(String source) throws IOException {
         URL url = new URL(source);
-        BufferedImage image = ImageIO.read(url);
-        return new JLabel(new ImageIcon(image));
+        try {
+            BufferedImage image = ImageIO.read(url);
+            return new JLabel(new ImageIcon(image));
+        } catch (IOException ioe) {
+            throw new IOException();
+        }
+
     }
 }

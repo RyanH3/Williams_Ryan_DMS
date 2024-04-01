@@ -1,9 +1,9 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 19 February 2024
+ * 1 April 2024
  * Comic.java
- * This class will be used to create Comics to store in the list.
+ * This class will hold information about a comic.
  */
 
 public class Comic {

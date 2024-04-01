@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 19 February 2024
+ * 1 April 2024
  * DatabaseManager.java
  * This class will present a menu for the user to navigate to display, add, edit,
  * or remove comics in a list of comics.
@@ -14,8 +14,8 @@ import java.util.Scanner;
 
 public class DatabaseManager {
     static ArrayList<Comic> comics = new ArrayList<>();
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws Exception {
+
         //Ask the user for a file name to add comics to the database.
         addComics("C:\\Users\\repti\\IdeaProjects\\Williams_Ryan_DMS\\src\\myComics.txt");
 
@@ -23,15 +23,15 @@ public class DatabaseManager {
         printComics(comics);
 
         //Ask the user for the title of a comic to remove it.
-        removeComic(comics, "title");
+        removeComic(comics, "title", "Bleach", 0);
         printComics(comics);
 
         //Ask the user for the ID of a comic to remove it.
-        removeComic(comics, "ID");
+        removeComic(comics, "ID", "", 2);
         printComics(comics);
 
         //Allow the user to edit a comic entry
-        editComics(comics);
+        editComics(comics, "Bleach", "2", "10");
         printComics(comics);
 
         //Prints the comics with the pinned comic at the top.
@@ -41,10 +41,10 @@ public class DatabaseManager {
     /*
      * Method Name: addComics
      * Purpose: Adds comics to the comic list from a user-submitted text file.
-     * Parameters: ArrayList<Comic>
+     * Parameters: String
      * Returns: nothing
      */
-    static void addComics(String filePath){
+    static void addComics(String filePath) throws IOException {
         boolean loopFlag = true;
         while (loopFlag) {
             try {
@@ -62,8 +62,7 @@ public class DatabaseManager {
                 fileScanner.close();
                 loopFlag = false;
             } catch (IOException e) {
-                System.out.println("File not found.");
-                pause();
+                throw new IOException("Invalid input");
             }
         }
     }
@@ -71,164 +70,86 @@ public class DatabaseManager {
     /*
      * Method Name: editComics
      * Purpose: Edits any editable attribute of a comic from the list.
-     * Parameters: ArrayList<Comic>
+     * Parameters: ArrayList<Comic>, String, String, String
      * Returns: nothing
      */
-    static void editComics(ArrayList<Comic> comics) {
-        Scanner scanner = new Scanner(System.in);
-        scanner.useDelimiter("\n");
-        boolean loopFlag = true;
-        while (loopFlag) {
-            String editTitle = "";
-            int editedComicIndex = 0;
-            while (loopFlag) {
-                System.out.println("Type the title of a comic to edit. Type \"stop\" to move on.");
-                editTitle = scanner.next();
+    static void editComics(ArrayList<Comic> comics, String editTitle, String attribute,
+                           String newValue) throws Exception, InputMismatchException {
+        // Make sure the comic is there and mark its place in the list.
+        boolean found = false;
+        int editedComicIndex = 0;
+        for (Comic comic : comics) {
+            if (comic.getTitle().equals(editTitle)) {
+                editedComicIndex = comics.indexOf(comic);
+                found = true;
+            }
+        }
 
-                // Make sure the comic is there and mark its place in the list.
-                boolean found = false;
-                for (Comic comic : comics) {
-                    if (comic.getTitle().equals(editTitle)) {
-                        editedComicIndex = comics.indexOf(comic);
-                        found = true;
-                        loopFlag = false;
-                        comic.print();
-                        pause();
+        if (!found) {
+            throw new Exception("Comic not found");
+        }
+
+        switch (attribute) {
+            case "1":
+            case "image":
+                comics.get(editedComicIndex).setImagePath(newValue);
+                System.out.println("New image path set.");
+                break;
+            case "2":
+            case "rating":
+                    try {
+                        if (Integer.parseInt(newValue) < 0 || Integer.parseInt(newValue) > 10) {
+                            throw new InputMismatchException();
+                        }
+                        comics.get(editedComicIndex).setRating(Integer.parseInt(newValue));
+                    } catch (InputMismatchException ime) {
+                        throw new InputMismatchException("Rating should be an integer from 0 to 10.");
                     }
-                }
-
-                if (editTitle.equals("stop")) {
-                    System.out.println("Moving on...");
-                    loopFlag = false;
-                    pause();
-                    continue;
-                }
-
-                if (!found) {
-                    System.out.println("That comic was not found in the list.");
-                    pause();
-                }
-            }
-
-            loopFlag = true;
-            while (loopFlag) {
-                if (editTitle.equals("stop")) {
-                    loopFlag = false;
-                    continue;
-                }
-                System.out.println(""" 
-                Type the number or name of an attribute of the comic to edit. Type "7" or "stop" to move on.
-                 
-                1. image
-                2. rating
-                3. current chapter
-                4. total chapters
-                5. completed
-                6. pinned
-                7. stop
-                """);
-                String attribute = scanner.next();
-
-                switch (attribute) {
-                    case "1":
-                    case "image":
-                        System.out.println("Please type the new image link.");
-                        comics.get(editedComicIndex).setImagePath(scanner.next());
-                        System.out.println("New image path set.");
-                        pause();
-                        break;
-                    case "2":
-                    case "rating":
-                        System.out.println("Please type the new rating.");
-                        while (loopFlag) {
-                            try {
-                                comics.get(editedComicIndex).setRating(scanner.nextInt());
-                                System.out.println("Rating set to " + comics.get(editedComicIndex).getRating() + ".");
-                                loopFlag = false;
-                                pause();
-                            } catch (InputMismatchException ime) {
-                                System.out.println("Please input an integer.");
-                                scanner.nextLine();
+                break;
+            case "3":
+            case "current chapter":
+                    try {
+                        comics.get(editedComicIndex).setCurrentChapter(Integer.parseInt(newValue));
+                        System.out.println("Current chapter set.");
+                    } catch (InputMismatchException ime) {
+                        throw new InputMismatchException("Chapter should be an integer.");
+                    }
+                break;
+            case "4":
+            case "total chapters":
+                    try {
+                        comics.get(editedComicIndex).setTotalChapters(Integer.parseInt(newValue));
+                        System.out.println("Total Chapters set.");
+                    } catch (InputMismatchException ime) {
+                        throw new InputMismatchException("Chapter should be an integer.");
+                    }
+                break;
+            case "5":
+            case "completed":
+                    try {
+                        comics.get(editedComicIndex).setCompleted(Boolean.parseBoolean(newValue));
+                        System.out.println("Completed set.");
+                    } catch (InputMismatchException ime) {
+                        throw new InputMismatchException("Completed should be a boolean value.");
+                    }
+                break;
+            case "6":
+            case "pinned":
+                    try {
+                        comics.get(editedComicIndex).setPinned(Boolean.parseBoolean(newValue));
+                        System.out.println("Pin set.");
+                        // Set any pinned comics to unpinned
+                        for (Comic comic : comics) {
+                            if (!comic.getTitle().equals(editTitle)) {
+                                comic.setPinned(false);
                             }
                         }
-                        loopFlag = true;
-                        break;
-                    case "3":
-                    case "current chapter":
-                        System.out.println("Please type the new current chapter.");
-                        while (loopFlag) {
-                            try {
-                                comics.get(editedComicIndex).setCurrentChapter(scanner.nextInt());
-                                System.out.println("Current chapter set.");
-                                loopFlag = false;
-                                pause();
-                            } catch (InputMismatchException ime) {
-                                System.out.println("Please input an integer.");
-                                scanner.nextLine();
-                            }
-                        }
-                        loopFlag = true;
-                        break;
-                    case "4":
-                    case "total chapters":
-                        System.out.println("Please type the new chapter total.");
-                        while (loopFlag) {
-                            try {
-                                comics.get(editedComicIndex).setTotalChapters(scanner.nextInt());
-                                System.out.println("Total Chapters set.");
-                                loopFlag = false;
-                                pause();
-                            } catch (InputMismatchException ime) {
-                                System.out.println("Please input an integer.");
-                                scanner.nextLine();
-                            }
-                        }
-                        loopFlag = true;
-                        break;
-                    case "5":
-                    case "completed":
-                        System.out.println("Please type the new state of completion (\"true\" or \"false\").");
-                        while (loopFlag) {
-                            try {
-                                comics.get(editedComicIndex).setCompleted(scanner.nextBoolean());
-                                System.out.println("Completed set.");
-                                loopFlag = false;
-                                pause();
-                            } catch (InputMismatchException ime) {
-                                System.out.println("Please type \"true\" or \"false\".");
-                                scanner.nextLine();
-                            }
-                        }
-                        loopFlag = true;
-                        break;
-                    case "6":
-                    case "pinned":
-                        System.out.println("Please type whether the comic is pinned or not (\"true\" or \"false\").");
-                        while (loopFlag) {
-                            try {
-                                comics.get(editedComicIndex).setPinned(scanner.nextBoolean());
-                                System.out.println("Pin set.");
-                                loopFlag = false;
-                                pause();
-                            } catch (InputMismatchException ime) {
-                                System.out.println("Please type \"true\" or \"false\".");
-                                scanner.nextLine();
-                            }
-                        }
-                        loopFlag = true;
-                        break;
-                    case "7":
-                    case "stop":
-                        System.out.println("Moving on...");
-                        loopFlag = false;
-                        pause();
-                        break;
-                    default:
-                        System.out.println("Invalid selection. Please type the number or text of the attribute.");
-                        pause();
-                        break;
-                }
-            }
+                    } catch (InputMismatchException ime) {
+                        throw new InputMismatchException("Pinned should be a boolean value.");
+                    }
+                break;
+            default:
+                throw new Exception("Invalid selection. Please type the number or text of the attribute.");
         }
     }
 
@@ -281,46 +202,29 @@ public class DatabaseManager {
     /*
      * Method Name: removeComic
      * Purpose: Removes a comic based on its title or ID.
-     * Parameters: ArrayList<Comic>, String
+     * Parameters: ArrayList<Comic>, String, String, int
      * Returns: nothing
      */
-    static void removeComic(ArrayList<Comic> comics, String inputType) {
-        Scanner scanner = new Scanner(System.in);
-        scanner.useDelimiter("\n");
-
+    static void removeComic(ArrayList<Comic> comics, String inputType, String title, int id)
+            throws Exception {
         if (inputType.equals("title")) {
-            System.out.println("Type the title of a comic to remove.");
-            String title = scanner.next();
-
             boolean removed = comics.removeIf(comic -> (comic.getTitle().equals(title)));
             if (!removed) {
-                System.out.println("The comic you requested was not found.\n");
-                pause();
+                throw new Exception("The comic requested was not found.");
             } else {
                 System.out.println("Comic deleted.");
-                pause();
             }
         } else if (inputType.equals("ID")) {
-            boolean loopFlag = true;
-            while (loopFlag) {
                 try {
-                    System.out.println("Type the ID of a comic to remove.");
-                    int id = scanner.nextInt();
                     boolean removed = comics.removeIf(comic -> (comic.getId() == id));
                     if (!removed) {
-                        System.out.println("The comic you requested was not found.\n");
-                        pause();
+                        throw new Exception("The comic requested was not found.");
                     } else {
                         System.out.println("Comic deleted.");
-                        pause();
                     }
-                    loopFlag = false;
                 } catch (InputMismatchException ime) {
-                    System.out.println("Please input an integer.");
-                    scanner.nextLine();
-                    pause();
+                    throw new InputMismatchException();
                 }
             }
         }
-    }
 }

@@ -1,3 +1,11 @@
+/*
+ * Ryan Williams
+ * CEN 3024C-26663 Software Development I
+ * 1 April 2024
+ * MainFrame.java
+ * This class is the home page of the GUI which leads to all other pages.
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,7 +34,7 @@ public class MainFrame {
         JLabel welcomeLabel = new JLabel("Welcome to the Comic DMS!");
         panel.add(welcomeLabel);
 
-        // Display comics button
+        // Display all user's comics in a list when "My Comics" is pressed
         JButton myComicsButton = buildButton("My Comics");
         myComicsButton.addActionListener(new ActionListener() {
             @Override
@@ -40,7 +48,7 @@ public class MainFrame {
         });
         panel.add(myComicsButton);
 
-        // Add comics button
+        // Allow a user to add comics from a text file when "Add comics" is pressed
         JButton addComicButton = buildButton("Add Comics");
         addComicButton.addActionListener(new ActionListener() {
             @Override
@@ -50,7 +58,7 @@ public class MainFrame {
         });
         panel.add(addComicButton);
 
-        // Edit comic button
+        // Allow a user to edit a comic when "Edit comic" is pressed
         JButton editComicButton = buildButton("Edit Comic");
         editComicButton.addActionListener(new ActionListener() {
             @Override
@@ -60,7 +68,7 @@ public class MainFrame {
         });
         panel.add(editComicButton);
 
-        // Remove comic button
+        // Allow a user to remove a comic when "Remove comic" is pressed
         JButton removeComicButton = buildButton("Remove Comic");
         removeComicButton.addActionListener(new ActionListener() {
             @Override
@@ -70,7 +78,7 @@ public class MainFrame {
         });
         panel.add(removeComicButton);
 
-        // Exit button
+        // Close the GUI when "Exit" is pressed
         JButton exitButton = buildButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             @Override
@@ -81,10 +89,15 @@ public class MainFrame {
         panel.add(exitButton);
 
         this.frame.add(panel);
-
         this.frame.setVisible(true);
     }
 
+    /*
+     * Method Name: buildButton
+     * Purpose: Helps make a button using just a name.
+     * Parameters: String
+     * Returns: JButton
+     */
     private JButton buildButton(String name) {
         JButton button = new JButton(name);
         return button;

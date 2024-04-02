@@ -8,6 +8,7 @@
  */
 import java.io.File;
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -15,7 +16,6 @@ import java.util.Scanner;
 public class DatabaseManager {
     static ArrayList<Comic> comics = new ArrayList<>();
     public static void main(String[] args) throws Exception {
-
         //Ask the user for a file name to add comics to the database.
         addComics("C:\\Users\\repti\\IdeaProjects\\Williams_Ryan_DMS\\src\\myComics.txt");
 

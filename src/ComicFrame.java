@@ -75,7 +75,6 @@ public class ComicFrame {
                 pinnedLabel = new JLabel("Pinned: " + comic.getPinned());
                 panel.add(pinnedLabel);
             }
-
         }
 
         JScrollPane scroll = new JScrollPane(panel);
@@ -99,6 +98,5 @@ public class ComicFrame {
         } catch (IOException ioe) {
             throw new IOException();
         }
-
     }
 }

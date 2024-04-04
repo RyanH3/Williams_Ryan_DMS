@@ -33,6 +33,7 @@ public class ComicFrame {
         this.frame.setResizable(true);
         panel = new JPanel();
         // Read the comics from the database and sort them
+        DatabaseManager.comics.clear();
         DatabaseManager.readComics();
         DatabaseManager.comics.sort(Comparator.comparing(Comic::getId));
         // Print the pinned comic first

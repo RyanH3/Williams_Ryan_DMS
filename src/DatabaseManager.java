@@ -219,7 +219,7 @@ public class DatabaseManager {
                 DatabaseManager.comics.add(comic);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
     }
 
@@ -249,6 +249,6 @@ public class DatabaseManager {
                 } catch (InputMismatchException ime) {
                     throw new InputMismatchException();
                 }
-            }
         }
+    }
 }

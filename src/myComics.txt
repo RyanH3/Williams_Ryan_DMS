@@ -2,4 +2,3 @@ Bleach,Tite Kubo,https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Bleachanim
 Solo Leveling,Chugong,https://static.wixstatic.com/media/1cf3ac_6ea6668ada5d48fe95b269a9177c2e3e~mv2.png,2,10,179,200,true,true
 Spider-Man/Deadpool,Joe Kelly,https://upload.wikimedia.org/wikipedia/en/0/05/Spider-Man_Deadpool_Vol_1_1.jpg,3,7,50,50,true,false
 Naruto,Kishimoto Masashi,https://static.wikia.nocookie.net/ultimatepopculture/images/9/94/NarutoCoverTankobon1.jpg,4,8,700,700,true,false
-Bleach|Tite Kubo|https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Bleachanime.png/220px-Bleachanime.png|1|9|686|686|1|0

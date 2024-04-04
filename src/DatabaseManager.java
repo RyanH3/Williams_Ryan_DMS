@@ -17,6 +17,7 @@ public class DatabaseManager {
     static ArrayList<Comic> comics = new ArrayList<>();
     static final String URL = "jdbc:sqlite:sqlite-tools-win-x64-3450200\\comics.db";
     public static void main(String[] args) throws Exception {
+        readComics();
         MainFrame frame = new MainFrame();
     }
 
@@ -216,7 +217,6 @@ public class DatabaseManager {
                         Integer.parseInt(comicItems[4]), Integer.parseInt(comicItems[5]), Integer.parseInt(comicItems[6]),
                         Boolean.parseBoolean(comicItems[7]), Boolean.parseBoolean(comicItems[8]));
                 DatabaseManager.comics.add(comic);
-                System.out.println(comicData);
             }
         } catch (SQLException e) {
             e.printStackTrace();

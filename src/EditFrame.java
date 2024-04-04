@@ -60,7 +60,6 @@ public class EditFrame {
                     JOptionPane.showMessageDialog(frame, "Comic not found.");
                 }
                 else {
-
                     try {
                         JLabel imageLabel = null;
                         imageLabel = ComicFrame.loadImage(DatabaseManager.comics.get(comicIndex).getImagePath());

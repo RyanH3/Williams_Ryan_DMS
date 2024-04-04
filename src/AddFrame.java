@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class AddFrame {
@@ -29,19 +32,33 @@ public class AddFrame {
         this.frame.setResizable(true);
 
         panel = new JPanel();
-        JLabel inputLabel = new JLabel("Comic list path: ");
+        JLabel inputLabel = new JLabel("New comic info (title,author,imagePath,id,rating,currentChapter," +
+                "totalChapters,completed,pinned): ");
         panel.add(inputLabel);
-        JTextField path = new JTextField(20);
-        panel.add(path);
+        JTextField comicEntry = new JTextField(50);
+        panel.add(comicEntry);
         JButton input = new JButton("Submit");
         input.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String filePath = path.getText();
+
                 try {
-                    DatabaseManager.addComics(filePath);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(frame, "File not found.");
+                    // Put all submitted values into a Comic object
+                    String newComic = comicEntry.getText();
+                    String[] comicItems = newComic.split(",");
+                    Comic comic = new Comic(comicItems[0], comicItems[1], comicItems[2], Integer.parseInt(comicItems[3]),
+                            Integer.parseInt(comicItems[4]), Integer.parseInt(comicItems[5]), Integer.parseInt(comicItems[6]),
+                            Boolean.parseBoolean(comicItems[7]), Boolean.parseBoolean(comicItems[8]));
+                    String update = "INSERT INTO Comics VALUES ('" + comic.getTitle() + "', '" + comic.getAuthor() +
+                            "', '" + comic.getImagePath() + "', " + comic.getId() + ", " + comic.getRating() + ", " +
+                            comic.getCurrentChapter() + ", " + comic.getTotalChapters() + ", " + comic.getCompleted() +
+                            ", " + comic.getPinned() + ");";
+                    // Add all submitted values to the database
+                    Connection con = DriverManager.getConnection(DatabaseManager.URL);
+                    Statement statement = con.createStatement();
+                    statement.executeUpdate(update);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame, "Error submitting new comic.");
                 }
                 frame.dispose();
             }

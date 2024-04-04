@@ -9,6 +9,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class RemoveFrame {
     private JFrame frame;
@@ -50,7 +51,16 @@ public class RemoveFrame {
                 }
                 else {
                     DatabaseManager.comics.remove(comicIndex);
+                    try {
+                        Connection con = DriverManager.getConnection(DatabaseManager.URL);
+                        Statement statement = con.createStatement();
+                        statement.executeUpdate("DELETE FROM Comics WHERE Title = '" + removeComic + "';");
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
                     frame.dispose();
+
                 }
             }
         });

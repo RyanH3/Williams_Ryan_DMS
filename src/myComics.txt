@@ -2,19 +2,4 @@ Bleach,Tite Kubo,https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Bleachanim
 Solo Leveling,Chugong,https://static.wixstatic.com/media/1cf3ac_6ea6668ada5d48fe95b269a9177c2e3e~mv2.png,2,10,179,200,true,true
 Spider-Man/Deadpool,Joe Kelly,https://upload.wikimedia.org/wikipedia/en/0/05/Spider-Man_Deadpool_Vol_1_1.jpg,3,7,50,50,true,false
 Naruto,Kishimoto Masashi,https://static.wikia.nocookie.net/ultimatepopculture/images/9/94/NarutoCoverTankobon1.jpg,4,8,700,700,true,false
-INSERT INTO Comics VALUES ('Sakamoto Days', 'Suzuki Yuuto', 'https://m.media-amazon.com/images/M/MV5BMTRlZDU2YTctMzcxMS00YWEzLTk4NmEtYjFhYmQ3MDk2OTdmXkEyXkFqcGdeQXVyMTExMjYxODgy._V1_.jpg', 5, 9, 160, 161, 0, 0);
-INSERT INTO Comics VALUES ('Dragon Ball Super', 'Toriyama Akira', 'https://m.media-amazon.com/images/M/MV5BY2I2MzI1ODYtMWRlOS00MzdhLWEyOWEtYWJhNmFiZTIxMGJhXkEyXkFqcGdeQXVyMTExNDQ2MTI@._V1_.jpg', 6, 8, 103, 103, 0, 0);
-INSERT INTO Comics VALUES ('Feng Shen Ji', 'Cheng Kin Wo', 'https://cdn.myanimelist.net/images/manga/2/177765.jpg', 7, 10, 182, 182, 1, 0);
-INSERT INTO Comics VALUES ('GOSU', 'Moon Jung-Hoo', 'https://static.wikia.nocookie.net/gosu-webtoon/images/6/61/Gosu_%28The_Master%291.png', 8, 10, 232, 232, 1, 0);
-INSERT INTO Comics VALUES ('Soul Eater', 'Ohkubo Atsushi', 'https://m.media-amazon.com/images/M/MV5BNTdiNTJmMzktZmE2MC00OWUxLWE1MjktMTdhN2Q1OWNlODY1L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg', 9, 9, 117, 117, 1, 0);
-INSERT INTO Comics VALUES ('One Punch Man', 'Murata Yuusuke', 'https://static.wikia.nocookie.net/onepunchman/images/8/82/Saitama_Manga.png/revision/latest?cb=20220825051134', 10, 10, 172, 173, 0, 0);
-INSERT INTO Comics VALUES ('Yongbi', 'Moon Jung-Hoo', 'https://pictures.abebooks.com/isbn/9781586649821-us.jpg', 11, 9, 149, 149, 1, 0);
-INSERT INTO Comics VALUES ('Toriko', 'Shimabukuro Mitsutoshi', 'https://upload.wikimedia.org/wikipedia/en/2/23/TorikoVol1Cover.jpg', 12, 8, 396, 396, 1, 0);
-INSERT INTO Comics VALUES ('Red Storm', 'Cyungchan Noh', 'https://static.wikia.nocookie.net/topstrongest/images/1/14/Red_storm.jpg/revision/latest?cb=20161227124444', 13, 9, 387, 387, 1, 0);
-INSERT INTO Comics VALUES ('Dragon Ball', 'Toriyama Akira', 'https://m.media-amazon.com/images/M/MV5BYzI0YjYxY2UtNzRjNS00NTZiLTgzMDItNGEzMjU5MmE0ZWJmXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg', 14, 7, 522, 522, 1, 0);
-INSERT INTO Comics VALUES ('Ninja Slayer', 'Bradley Bond', 'https://static.wikia.nocookie.net/ninjaslayer/images/8/8c/Ninja_Slayer_Manga_Main.jpg/revision/latest?cb=20220120175513', 15, 9, 6, 6, 1, 0);
-INSERT INTO Comics VALUES ('Kimetsu no Yaiba', 'Gotouge Koyoharu', 'https://m.media-amazon.com/images/M/MV5BYTIxNjk3YjItYmYzMC00ZTdmLTk0NGUtZmNlZTA0NWFkZDMwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg', 16, 8, 205, 205, 1, 0);
-INSERT INTO Comics VALUES ('Ability', 'Lee Gwang-Su', 'https://static.wikia.nocookie.net/whumpapedia/images/7/7b/Ability_%28manhwa%29.jpeg/revision/latest?cb=20211119180631', 17, 7, 60, 60, 1, 0);
-INSERT INTO Comics VALUES ('One Piece', 'Oda Eiichiro', 'https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg', 18, 6, 1065, 1068, 0, 0);
-INSERT INTO Comics VALUES ('Fullmetal Alchemist', 'Arakawa Hiromu', 'https://m.media-amazon.com/images/M/MV5BMmI5NmFlZjItOTBhOC00NGI0LWIyNDAtODJhOTJjZDEyMTYyXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg', 19, 8, 113, 113, 1, 0);
-INSERT INTO Comics VALUES ('Donten Prism Solar Car', 'Murata Yuusuke', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBJcc-cgLg2XhQF3yR6XwlReyHAq10iGZLmXhSLYILWA&s', 20, 9, 9, 9, 1, 0);
+Bleach|Tite Kubo|https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Bleachanime.png/220px-Bleachanime.png|1|9|686|686|1|0

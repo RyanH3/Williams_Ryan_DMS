@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ComicFrame {
     private JFrame frame;
@@ -31,7 +32,9 @@ public class ComicFrame {
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(true);
         panel = new JPanel();
-
+        // Read the comics from the database and sort them
+        DatabaseManager.readComics();
+        DatabaseManager.comics.sort(Comparator.comparing(Comic::getId));
         // Print the pinned comic first
         for (Comic comic : DatabaseManager.comics) {
             if (comic.getPinned()) {

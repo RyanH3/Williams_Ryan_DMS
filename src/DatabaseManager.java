@@ -15,27 +15,9 @@ import java.util.Scanner;
 
 public class DatabaseManager {
     static ArrayList<Comic> comics = new ArrayList<>();
+    static final String URL = "jdbc:sqlite:sqlite-tools-win-x64-3450200\\comics.db";
     public static void main(String[] args) throws Exception {
-        //Ask the user for a file name to add comics to the database.
-        addComics("C:\\Users\\repti\\IdeaProjects\\Williams_Ryan_DMS\\src\\myComics.txt");
-
-        //Print the database to the screen
-        printComics(comics);
-
-        //Ask the user for the title of a comic to remove it.
-        removeComic(comics, "title", "Bleach", 0);
-        printComics(comics);
-
-        //Ask the user for the ID of a comic to remove it.
-        removeComic(comics, "ID", "", 2);
-        printComics(comics);
-
-        //Allow the user to edit a comic entry
-        editComics(comics, "Bleach", "2", "10");
-        printComics(comics);
-
-        //Prints the comics with the pinned comic at the top.
-        printComicsPinned(comics);
+        MainFrame frame = new MainFrame();
     }
 
     /*
@@ -88,11 +70,15 @@ public class DatabaseManager {
         if (!found) {
             throw new Exception("Comic not found");
         }
+        Connection con = DriverManager.getConnection(URL);
+        Statement statement = con.createStatement();
 
         switch (attribute) {
             case "1":
             case "image":
                 comics.get(editedComicIndex).setImagePath(newValue);
+                statement.executeUpdate("UPDATE Comics SET ImagePath = '" + newValue + "' WHERE Title = '" +
+                        editTitle + "';");
                 System.out.println("New image path set.");
                 break;
             case "2":
@@ -102,6 +88,8 @@ public class DatabaseManager {
                             throw new InputMismatchException();
                         }
                         comics.get(editedComicIndex).setRating(Integer.parseInt(newValue));
+                        statement.executeUpdate("UPDATE Comics SET Rating = " + Integer.parseInt(newValue) +
+                                " WHERE Title = '" + editTitle + "';");
                     } catch (InputMismatchException ime) {
                         throw new InputMismatchException("Rating should be an integer from 0 to 10.");
                     }
@@ -110,6 +98,8 @@ public class DatabaseManager {
             case "current chapter":
                     try {
                         comics.get(editedComicIndex).setCurrentChapter(Integer.parseInt(newValue));
+                        statement.executeUpdate("UPDATE Comics SET CurrentChapter = " + Integer.parseInt(newValue)
+                                + " WHERE Title = '" + editTitle + "';");
                         System.out.println("Current chapter set.");
                     } catch (InputMismatchException ime) {
                         throw new InputMismatchException("Chapter should be an integer.");
@@ -119,6 +109,8 @@ public class DatabaseManager {
             case "total chapters":
                     try {
                         comics.get(editedComicIndex).setTotalChapters(Integer.parseInt(newValue));
+                        statement.executeUpdate("UPDATE Comics SET TotalChapters = " + Integer.parseInt(newValue)
+                                + " WHERE Title = '" + editTitle + "';");
                         System.out.println("Total Chapters set.");
                     } catch (InputMismatchException ime) {
                         throw new InputMismatchException("Chapter should be an integer.");
@@ -128,6 +120,8 @@ public class DatabaseManager {
             case "completed":
                     try {
                         comics.get(editedComicIndex).setCompleted(Boolean.parseBoolean(newValue));
+                        statement.executeUpdate("UPDATE Comics SET Completed = " + Boolean.parseBoolean(newValue)
+                                + " WHERE Title = '" + editTitle + "';");
                         System.out.println("Completed set.");
                     } catch (InputMismatchException ime) {
                         throw new InputMismatchException("Completed should be a boolean value.");
@@ -137,6 +131,8 @@ public class DatabaseManager {
             case "pinned":
                     try {
                         comics.get(editedComicIndex).setPinned(Boolean.parseBoolean(newValue));
+                        statement.executeUpdate("UPDATE Comics SET Pinned = " + Boolean.parseBoolean(newValue)
+                                + " WHERE Title = '" + editTitle + "';");
                         System.out.println("Pin set.");
                         // Set any pinned comics to unpinned
                         for (Comic comic : comics) {
@@ -197,6 +193,34 @@ public class DatabaseManager {
             }
         }
         pause();
+    }
+
+    /*
+     * Method Name: readComics
+     * Purpose: Reads the Comics from the database and puts them in a Comic list.
+     * Parameters: none
+     * Returns: nothing
+     */
+    public static void readComics() {
+        try {
+            Connection con = DriverManager.getConnection(URL);
+            Statement statement = con.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Comics;");
+            while (result.next()) {
+                String comicData = "";
+                for (int i = 1; i <= 9; i++) {
+                    comicData += result.getString(i) + ",";
+                }
+                String[] comicItems = comicData.split(",");
+                Comic comic = new Comic(comicItems[0], comicItems[1], comicItems[2], Integer.parseInt(comicItems[3]),
+                        Integer.parseInt(comicItems[4]), Integer.parseInt(comicItems[5]), Integer.parseInt(comicItems[6]),
+                        Boolean.parseBoolean(comicItems[7]), Boolean.parseBoolean(comicItems[8]));
+                DatabaseManager.comics.add(comic);
+                System.out.println(comicData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /*

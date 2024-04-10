@@ -52,7 +52,7 @@ public class RemoveFrame {
                 else {
                     DatabaseManager.comics.remove(comicIndex);
                     try {
-                        Connection con = DriverManager.getConnection(DatabaseManager.URL);
+                        Connection con = DriverManager.getConnection(DatabaseManager.url);
                         Statement statement = con.createStatement();
                         statement.executeUpdate("DELETE FROM Comics WHERE Title = '" + removeComic + "';");
                     } catch (SQLException ex) {

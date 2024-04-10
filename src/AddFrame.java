@@ -9,11 +9,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 public class AddFrame {
     private JFrame frame;
@@ -32,17 +27,18 @@ public class AddFrame {
         this.frame.setResizable(true);
 
         panel = new JPanel();
-        JLabel inputLabel = new JLabel("New comic info (title,author,imagePath,id,rating,currentChapter," +
-                "totalChapters,completed,pinned): ");
+        // JLabel inputLabel = new JLabel("New comic info (title,author,imagePath,id,rating,currentChapter," +
+        //        "totalChapters,completed,pinned): ");
+        JLabel inputLabel = new JLabel("Path to database:");
         panel.add(inputLabel);
-        JTextField comicEntry = new JTextField(50);
-        panel.add(comicEntry);
+        JTextField dbEntry = new JTextField(20);
+        panel.add(dbEntry);
         JButton input = new JButton("Submit");
         input.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 try {
+                    /*
                     // Put all submitted values into a Comic object
                     String newComic = comicEntry.getText();
                     String[] comicItems = newComic.split(",");
@@ -57,6 +53,10 @@ public class AddFrame {
                     Connection con = DriverManager.getConnection(DatabaseManager.URL);
                     Statement statement = con.createStatement();
                     statement.executeUpdate(update);
+                     */
+                    DatabaseManager.url = "jdbc:sqlite:" + dbEntry.getText();
+                    DatabaseManager.comics.clear();
+                    DatabaseManager.readComics();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, "Error submitting new comic.");
                 }

@@ -9,7 +9,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class EditFrame {
     private JFrame frame;
@@ -108,31 +107,31 @@ public class EditFrame {
                             }
 
                             try {
-                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "rating", newRating.getText());
+                                DatabaseManager.editComics(editComic, "rating", newRating.getText());
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(frame, "Rating not set.");
                             }
 
                             try {
-                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "current chapter", newCurrentChapter.getText());
+                                DatabaseManager.editComics(editComic, "current chapter", newCurrentChapter.getText());
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(frame, "Current chapter not set.");
                             }
 
                             try {
-                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "total chapters", newTotalChapters.getText());
+                                DatabaseManager.editComics(editComic, "total chapters", newTotalChapters.getText());
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(frame, "Total chapters not set.");
                             }
 
                             try {
-                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "completed", newCompleted.getText());
+                                DatabaseManager.editComics(editComic, "completed", newCompleted.getText());
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(frame, "Completed not set.");
                             }
 
                             try {
-                                DatabaseManager.editComics(DatabaseManager.comics, editComic, "pinned", newPinned.getText());
+                                DatabaseManager.editComics(editComic, "pinned", newPinned.getText());
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(frame, "Pinned not set.");
                             }

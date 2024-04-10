@@ -3,6 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Williams_Ryan_DMS_jar</output-path>
     <root id="archive" name="Williams_Ryan_DMS.jar">
       <element id="module-output" name="Williams_Ryan_DMS" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/slf4j-nop-2.0.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/slf4j-api-2.0.12.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/sqlite-jdbc-3.45.2.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter/5.8.1/junit-jupiter-5.8.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar" path-in-jar="/" />
@@ -12,8 +14,6 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-params/5.8.1/junit-jupiter-params-5.8.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$USER_HOME$/Downloads/slf4j-nop-2.0.12.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$USER_HOME$/Downloads/slf4j-api-2.0.12.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

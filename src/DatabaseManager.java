@@ -6,6 +6,7 @@
  * This class will present a menu for the user to navigate to display, add, edit,
  * or remove comics in a list of comics.
  */
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
@@ -15,9 +16,8 @@ import java.util.Scanner;
 
 public class DatabaseManager {
     static ArrayList<Comic> comics = new ArrayList<>();
-    static final String URL = "jdbc:sqlite:sqlite-tools-win-x64-3450200\\comics.db";
-    public static void main(String[] args) throws Exception {
-        readComics();
+    public static String url;
+    public static void main(String[] args) {
         MainFrame frame = new MainFrame();
     }
 
@@ -56,7 +56,7 @@ public class DatabaseManager {
      * Parameters: ArrayList<Comic>, String, String, String
      * Returns: nothing
      */
-    static void editComics(ArrayList<Comic> comics, String editTitle, String attribute,
+    static void editComics(String editTitle, String attribute,
                            String newValue) throws Exception, InputMismatchException {
         // Make sure the comic is there and mark its place in the list.
         boolean found = false;
@@ -71,7 +71,7 @@ public class DatabaseManager {
         if (!found) {
             throw new Exception("Comic not found");
         }
-        Connection con = DriverManager.getConnection(URL);
+        Connection con = DriverManager.getConnection(url);
         Statement statement = con.createStatement();
 
         switch (attribute) {
@@ -202,9 +202,10 @@ public class DatabaseManager {
      * Parameters: none
      * Returns: nothing
      */
-    public static void readComics() {
+    static void readComics() {
         try {
-            Connection con = DriverManager.getConnection(URL);
+
+            Connection con = DriverManager.getConnection(url);
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM Comics;");
             while (result.next()) {

@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 1 April 2024
+ * 10 April 2024
  * Comic.java
  * This class creates a JFrame that allows a user to remove a preexisting comic.
  */

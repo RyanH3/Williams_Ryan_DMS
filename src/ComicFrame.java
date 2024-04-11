@@ -14,16 +14,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 
+/**
+ * Creates a JFrame that displays all the comics in the user's list.
+ */
 public class ComicFrame {
     private JFrame frame;
     private JPanel panel;
     private JLabel imageLabel, titleLabel, authorLabel, completedLabel, ratingLabel, idLabel, chapterLabel, pinnedLabel;
 
+    /**
+     * Builds the panel and adds it to the frame.
+     * @throws IOException If the image does not load from the given URL.
+     */
     public ComicFrame() throws IOException {
-        initialize();
-    }
-
-    public void initialize() throws IOException {
         frame = new JFrame();
         this.frame.setTitle("My Comics");
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -32,8 +35,8 @@ public class ComicFrame {
         this.frame.setResizable(true);
         panel = new JPanel();
         // Read the comics from the database and sort them
-//        DatabaseManager.comics.clear();
-//        DatabaseManager.readComics();
+        DatabaseManager.comics.clear();
+        DatabaseManager.readComics();
         DatabaseManager.comics.sort(Comparator.comparing(Comic::getId));
         // Print the pinned comic first
         for (Comic comic : DatabaseManager.comics) {
@@ -87,11 +90,11 @@ public class ComicFrame {
         this.frame.setVisible(true);
     }
 
-    /*
-     * Method Name: loadImage
-     * Purpose: Makes a JLabel with an image using the image's URL.
-     * Parameters: String
-     * Returns: JLabel
+    /**
+     * Makes a JLabel with an image using the image's URL.
+     * @param source URL of the image.
+     * @return A JLabel with the image.
+     * @throws IOException If the image does not load from the given URL.
      */
     public static JLabel loadImage(String source) throws IOException {
         URL url = new URL(source);

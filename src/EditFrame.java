@@ -10,15 +10,17 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Creates a JFrame that allows a user to edit a preexisting comic.
+ */
 public class EditFrame {
     private JFrame frame;
     private JPanel panel;
 
+    /**
+     * Builds the panel and adds it to the frame.
+     */
     public EditFrame() {
-        initialize();
-    }
-
-    public void initialize() {
         frame = new JFrame();
         this.frame.setTitle("Edit Comic");
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -60,7 +62,7 @@ public class EditFrame {
                 }
                 else {
                     try {
-                        JLabel imageLabel = null;
+                        JLabel imageLabel;
                         imageLabel = ComicFrame.loadImage(DatabaseManager.comics.get(comicIndex).getImagePath());
                         newPanel.add(imageLabel);
                     } catch (Exception ex) {

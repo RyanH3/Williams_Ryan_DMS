@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 1 April 2024
+ * 10 April 2024
  * MainFrame.java
  * This class is the home page of the GUI which leads to all other pages.
  */
@@ -12,14 +12,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Loads ComicFrame, AddFrame, EditFrame, and RemoveFrame and exits the program.
+ */
 public class MainFrame {
     private JFrame frame;
 
+    /**
+     * Builds the panel and adds it to the frame.
+     */
     public MainFrame() {
-        initialize();
-    }
-
-    public void initialize() {
         frame = new JFrame();
         this.frame.setTitle("Main Menu");
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -39,7 +41,7 @@ public class MainFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ComicFrame comics = new ComicFrame();
+                    new ComicFrame();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -52,7 +54,7 @@ public class MainFrame {
         addComicButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddFrame add = new AddFrame();
+                new AddFrame();
             }
         });
         panel.add(addComicButton);
@@ -62,7 +64,7 @@ public class MainFrame {
         editComicButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditFrame edit = new EditFrame();
+                new EditFrame();
             }
         });
         panel.add(editComicButton);
@@ -72,7 +74,7 @@ public class MainFrame {
         removeComicButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RemoveFrame edit = new RemoveFrame();
+                new RemoveFrame();
             }
         });
         panel.add(removeComicButton);
@@ -91,14 +93,12 @@ public class MainFrame {
         this.frame.setVisible(true);
     }
 
-    /*
-     * Method Name: buildButton
-     * Purpose: Helps make a button using just a name.
-     * Parameters: String
-     * Returns: JButton
+    /**
+     * Helps make a button using just a name.
+     * @param name Name of the button.
+     * @return A button object.
      */
     private JButton buildButton(String name) {
-        JButton button = new JButton(name);
-        return button;
+        return new JButton(name);
     }
 }

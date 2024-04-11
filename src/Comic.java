@@ -1,16 +1,31 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 1 April 2024
+ * 10 April 2024
  * Comic.java
  * This class will hold information about a comic.
  */
 
+/**
+ * Holds information about a comic.
+ */
 public class Comic {
     private String title, author, imagePath;
     private int id, rating, currentChapter, totalChapters;
     private boolean completed, pinned;
 
+    /**
+     * Makes a Comic object.
+     * @param title Title of comic.
+     * @param author Author of comic.
+     * @param imagePath URL of image to be used for comic.
+     * @param id ID of comic.
+     * @param rating Rating for comic out of 10.
+     * @param currentChapter Current chapter of comic user is reading.
+     * @param totalChapters Total chapters in comic.
+     * @param completed Whether comic is completed or not.
+     * @param pinned Whether comic is at top of list.
+     */
     public Comic(String title, String author, String imagePath,
                  int id, int rating, int currentChapter, int totalChapters,
                  boolean completed, boolean pinned) {
@@ -97,11 +112,8 @@ public class Comic {
         this.pinned = pinned;
     }
 
-    /*
-     * Method Name: print
-     * Purpose: Prints information about the comic.
-     * Parameters: none
-     * Returns: nothing
+    /**
+     * Prints information about the comic.
      */
     public void print() {
         System.out.println(this.imagePath +

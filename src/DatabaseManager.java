@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 1 April 2024
+ * 10 April 2024
  * DatabaseManager.java
  * This class will present a menu for the user to navigate to display, add, edit,
  * or remove comics in a list of comics.
@@ -14,18 +14,26 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Presents menu for user to display, add, edit, or remove comics from a database.
+ */
 public class DatabaseManager {
     static ArrayList<Comic> comics = new ArrayList<>();
     public static String url;
+
+    /**
+     * Opens the DatabaseManager GUI.
+     * @param args Arguments from console.
+     */
     public static void main(String[] args) {
-        MainFrame frame = new MainFrame();
+        new MainFrame();
     }
 
-    /*
-     * Method Name: addComics
-     * Purpose: Adds comics to the comic list from a user-submitted text file.
-     * Parameters: String
-     * Returns: nothing
+    /**
+     * Adds comics to the comic list from a user-submitted text file.
+     * @param filePath Path to a text file with comic entries.
+     * @throws IOException If a bad value is submitted.
+     * @deprecated
      */
     static void addComics(String filePath) throws IOException {
         boolean loopFlag = true;
@@ -50,11 +58,13 @@ public class DatabaseManager {
         }
     }
 
-    /*
-     * Method Name: editComics
-     * Purpose: Edits any editable attribute of a comic from the list.
-     * Parameters: ArrayList<Comic>, String, String, String
-     * Returns: nothing
+    /**
+     * Edits any editable attribute of a comic from the list.
+     * @param editTitle Title of comic to be edited.
+     * @param attribute Attribute of the comic to be edited.
+     * @param newValue New value of attribute.
+     * @throws Exception If comic is not in the list.
+     * @throws InputMismatchException If user submits an invalid value.
      */
     static void editComics(String editTitle, String attribute,
                            String newValue) throws Exception, InputMismatchException {
@@ -150,61 +160,11 @@ public class DatabaseManager {
         }
     }
 
-    /*
-     * Method Name: pause
-     * Purpose: Pauses the system until the user presses ENTER
-     * Parameters: none
-     * Returns: nothing
-     */
-    static void pause() {
-        Scanner myScanner = new Scanner(System.in);
-        System.out.println("Press ENTER to continue...");
-        myScanner.nextLine();
-    }
-
-    /*
-     * Method Name: printComics
-     * Purpose: Prints all comics in the comic list.
-     * Parameters: ArrayList<Comic>
-     * Returns: nothing
-     */
-    static void printComics(ArrayList<Comic> comics) {
-        System.out.println("Printing comics...");
-        for (Comic comic : comics) {
-            comic.print();
-        }
-    }
-
-    /*
-     * Method Name: printComicsPinned
-     * Purpose: Prints all comics in the comic list, with the pinned comic at the top.
-     * Parameters: ArrayList<Comic>
-     * Returns: nothing
-     */
-    static void printComicsPinned(ArrayList<Comic> comics) {
-        System.out.println("Printing comics (pinned comic first)...");
-        for (Comic comic : comics) {
-            if (comic.getPinned()) {
-                comic.print();
-            }
-        }
-        for (Comic comic : comics) {
-            if (!comic.getPinned()) {
-                comic.print();
-            }
-        }
-        pause();
-    }
-
-    /*
-     * Method Name: readComics
-     * Purpose: Reads the Comics from the database and puts them in a Comic list.
-     * Parameters: none
-     * Returns: nothing
+    /**
+     * Reads the Comics from the database and puts them in a Comic list.
      */
     static void readComics() {
         try {
-
             Connection con = DriverManager.getConnection(url);
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM Comics;");
@@ -220,36 +180,36 @@ public class DatabaseManager {
                 DatabaseManager.comics.add(comic);
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 
-    /*
-     * Method Name: removeComic
-     * Purpose: Removes a comic based on its title or ID.
-     * Parameters: ArrayList<Comic>, String, String, int
-     * Returns: nothing
+    /**
+     * Removes a comic based on its title or ID.
+     * @param inputType Attribute that identifies the comic, "title" or "ID".
+     * @param title Title of comic to be removed.
+     * @param id ID of comic to be removed.
+     * @throws Exception If the comic to be removed was not found.
      */
-    static void removeComic(ArrayList<Comic> comics, String inputType, String title, int id)
-            throws Exception {
+    static void removeComic(String inputType, String title, int id)
+            throws SQLException {
         if (inputType.equals("title")) {
-            boolean removed = comics.removeIf(comic -> (comic.getTitle().equals(title)));
-            if (!removed) {
-                throw new Exception("The comic requested was not found.");
-            } else {
-                System.out.println("Comic deleted.");
+            try {
+                Connection con = DriverManager.getConnection(DatabaseManager.url);
+                Statement statement = con.createStatement();
+                statement.executeUpdate("DELETE FROM Comics WHERE Title = '" + title + "';");
+            }
+            catch (SQLException sql) {
+                throw new SQLException();
             }
         } else if (inputType.equals("ID")) {
-                try {
-                    boolean removed = comics.removeIf(comic -> (comic.getId() == id));
-                    if (!removed) {
-                        throw new Exception("The comic requested was not found.");
-                    } else {
-                        System.out.println("Comic deleted.");
-                    }
-                } catch (InputMismatchException ime) {
-                    throw new InputMismatchException();
-                }
+            try {
+                Connection con = DriverManager.getConnection(DatabaseManager.url);
+                Statement statement = con.createStatement();
+                statement.executeUpdate("DELETE FROM Comics WHERE Id = " + id + ";");
+            } catch (SQLException sql) {
+                throw new SQLException();
+            }
         }
     }
 }

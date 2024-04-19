@@ -63,7 +63,8 @@ public class EditFrame {
                 else {
                     try {
                         JLabel imageLabel;
-                        imageLabel = ComicFrame.loadImage(DatabaseManager.comics.get(comicIndex).getImagePath());
+                        imageLabel = ComicFrame.loadImage(DatabaseManager.comics.get(comicIndex).getImagePath(),
+                                169, 300);
                         newPanel.add(imageLabel);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(frame, "Image not found.");

@@ -33,53 +33,23 @@ public class ComicFrame {
         this.frame.setSize(500, 400);
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(true);
-        panel = new JPanel();
-        // Read the comics from the database and sort them
+
         DatabaseManager.comics.clear();
         DatabaseManager.readComics();
         DatabaseManager.comics.sort(Comparator.comparing(Comic::getId));
+
+        panel = new JPanel(new GridLayout(DatabaseManager.comics.size(), 1));
+
         // Print the pinned comic first
         for (Comic comic : DatabaseManager.comics) {
             if (comic.getPinned()) {
-                imageLabel = loadImage(comic.getImagePath());
-                panel.add(imageLabel);
-                titleLabel = new JLabel(comic.getTitle());
-                panel.add(titleLabel);
-                authorLabel = new JLabel("by " + comic.getAuthor());
-                panel.add(authorLabel);
-                completedLabel = new JLabel("Completed: " + comic.getCompleted());
-                panel.add(completedLabel);
-                ratingLabel = new JLabel("Rating: " + comic.getRating());
-                panel.add(ratingLabel);
-                idLabel = new JLabel("ID: " + comic.getId());
-                panel.add(idLabel);
-                chapterLabel = new JLabel("Currently on chapter " + comic.getCurrentChapter() +
-                        " / " + comic.getTotalChapters());
-                panel.add(chapterLabel);
-                pinnedLabel = new JLabel("Pinned: " + comic.getPinned());
-                panel.add(pinnedLabel);
+                panel.add(printComic(comic));
             }
         }
         // Print the unpinned comics
         for (Comic comic : DatabaseManager.comics) {
             if (!comic.getPinned()) {
-                imageLabel = loadImage(comic.getImagePath());
-                panel.add(imageLabel);
-                titleLabel = new JLabel(comic.getTitle());
-                panel.add(titleLabel);
-                authorLabel = new JLabel("by " + comic.getAuthor());
-                panel.add(authorLabel);
-                completedLabel = new JLabel("Completed: " + comic.getCompleted());
-                panel.add(completedLabel);
-                ratingLabel = new JLabel("Rating: " + comic.getRating());
-                panel.add(ratingLabel);
-                idLabel = new JLabel("ID: " + comic.getId());
-                panel.add(idLabel);
-                chapterLabel = new JLabel("Currently on chapter " + comic.getCurrentChapter() +
-                        " / " + comic.getTotalChapters());
-                panel.add(chapterLabel);
-                pinnedLabel = new JLabel("Pinned: " + comic.getPinned());
-                panel.add(pinnedLabel);
+                panel.add(printComic(comic));
             }
         }
 
@@ -91,20 +61,85 @@ public class ComicFrame {
     }
 
     /**
+     * Creates a GridBagConstraints object to position an element.
+     * @param gridx Where on the x-axis of the grid the element is.
+     * @param gridy Where on the y-axis of the grid the element is.
+     * @param gridWidth How many rows the elements takes up.
+     * @param gridHeight How many columns the elements takes up.
+     * @return A GridBagConstraints object.
+     */
+    public static GridBagConstraints addConstraints(int gridx, int gridy, int gridWidth, int gridHeight) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        gbc.gridwidth = gridWidth;
+        gbc.gridheight = gridHeight;
+
+        return gbc;
+    }
+
+    /**
      * Makes a JLabel with an image using the image's URL.
      * @param source URL of the image.
+     * @param width Width of the image.
+     * @param height Height of the image.
      * @return A JLabel with the image.
      * @throws IOException If the image does not load from the given URL.
      */
-    public static JLabel loadImage(String source) throws IOException {
+    public static JLabel loadImage(String source, int width, int height) throws IOException {
         URL url = new URL(source);
         try {
             BufferedImage image = ImageIO.read(url);
-            JLabel comicImage = new JLabel(new ImageIcon(image));
-            comicImage.setPreferredSize(new Dimension(169, 300));
-            return comicImage;
+            Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+            return new JLabel(new ImageIcon(resizedImage));
         } catch (IOException ioe) {
             throw new IOException();
         }
+    }
+
+    /**
+     * Makes a JPanel with all the comics in it for the GUI to display.
+     * @param comic Comic object to make the panel.
+     * @return JPanel to be added to the Comic list.
+     * @throws IOException If the image is not found using the submitted link.
+     */
+    public static JPanel printComic(Comic comic) throws IOException {
+        JPanel newPanel = new JPanel(new GridBagLayout());
+
+        JLabel imageLabel = loadImage(comic.getImagePath(), 169, 300);
+        GridBagConstraints gbc = addConstraints(1, 1, 1, 5);
+        newPanel.add(imageLabel, gbc);
+
+        JLabel titleLabel = new JLabel(comic.getTitle());
+        gbc = addConstraints(2, 1, 1, 1);
+        newPanel.add(titleLabel, gbc);
+
+        JLabel authorLabel = new JLabel("by " + comic.getAuthor());
+        gbc = addConstraints(2, 2, 1, 1);
+        newPanel.add(authorLabel, gbc);
+
+        JLabel completedLabel = new JLabel("Completed: " + comic.getCompleted());
+        gbc = addConstraints(2, 3, 1, 1);
+        newPanel.add(completedLabel, gbc);
+
+        JLabel ratingLabel = new JLabel("Rating: " + comic.getRating());
+        gbc = addConstraints(3, 3, 1, 1);
+        newPanel.add(ratingLabel, gbc);
+
+        JLabel idLabel = new JLabel("ID: " + comic.getId());
+        gbc = addConstraints(2, 5, 1, 1);
+        newPanel.add(idLabel, gbc);
+
+        JLabel chapterLabel = new JLabel("Currently on chapter " + comic.getCurrentChapter() +
+                " / " + comic.getTotalChapters());
+        gbc = addConstraints(2, 4, 1, 1);
+        newPanel.add(chapterLabel, gbc);
+
+        String pinPath = comic.getPinned() ? "https://static.vecteezy.com/system/resources/previews/021/494/531/original/push-pin-icon-in-gradient-colors-thumbtack-signs-illustration-png.png" : "https://upload.wikimedia.org/wikipedia/commons/5/59/Empty.png";
+        JLabel pinnedLabel = loadImage(pinPath, 32, 32);
+        gbc = addConstraints(3, 1, 1, 1);
+        newPanel.add(pinnedLabel, gbc);
+
+        return newPanel;
     }
 }

@@ -174,9 +174,10 @@ public class DatabaseManager {
                     comicData += result.getString(i) + ",";
                 }
                 String[] comicItems = comicData.split(",");
+
                 Comic comic = new Comic(comicItems[0], comicItems[1], comicItems[2], Integer.parseInt(comicItems[3]),
                         Integer.parseInt(comicItems[4]), Integer.parseInt(comicItems[5]), Integer.parseInt(comicItems[6]),
-                        Boolean.parseBoolean(comicItems[7]), Boolean.parseBoolean(comicItems[8]));
+                        comicItems[7].equals("1"), comicItems[8].equals("1"));
                 DatabaseManager.comics.add(comic);
             }
         } catch (SQLException e) {

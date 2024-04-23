@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 10 April 2024
+ * 23 April 2024
  * DatabaseManager.java
  * This class will present a menu for the user to navigate to display, add, edit,
  * or remove comics in a list of comics.
@@ -190,7 +190,7 @@ public class DatabaseManager {
      * @param inputType Attribute that identifies the comic, "title" or "ID".
      * @param title Title of comic to be removed.
      * @param id ID of comic to be removed.
-     * @throws Exception If the comic to be removed was not found.
+     * @throws SQLException If the comic to be removed was not found.
      */
     static void removeComic(String inputType, String title, int id)
             throws SQLException {

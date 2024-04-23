@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 10 April 2024
+ * 23 April 2024
  * AddFrame.java
  * This class creates a JFrame that lets the user add comics to their list.
  */

@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 10 April 2024
+ * 23 April 2024
  * ComicFrame.java
  * This class creates a JFrame that displays all the comics in the user's list.
  */
@@ -118,7 +118,8 @@ public class ComicFrame {
         gbc = addConstraints(2, 2, 1, 1);
         newPanel.add(authorLabel, gbc);
 
-        JLabel completedLabel = new JLabel("Completed: " + comic.getCompleted());
+        String completedText = comic.getCompleted() ? "Completed" : "Not completed";
+        JLabel completedLabel = new JLabel(completedText);
         gbc = addConstraints(2, 3, 1, 1);
         newPanel.add(completedLabel, gbc);
 

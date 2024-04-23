@@ -1,7 +1,7 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 10 April 2024
+ * 23 April 2024
  * MainFrame.java
  * This class is the home page of the GUI which leads to all other pages.
  */
@@ -32,7 +32,9 @@ public class MainFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 1));
 
-        JLabel welcomeLabel = new JLabel("Welcome to the Comic DMS!");
+        JLabel welcomeLabel = new JLabel("Welcome!");
+        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        welcomeLabel.setFont(new Font("Helvetica", Font.PLAIN, 36));
         panel.add(welcomeLabel);
 
         // Display all user's comics in a list when "My Comics" is pressed
@@ -99,6 +101,10 @@ public class MainFrame {
      * @return A button object.
      */
     private JButton buildButton(String name) {
-        return new JButton(name);
+        JButton newButton = new JButton(name);
+        newButton.setBackground(Color.BLUE);
+        newButton.setForeground(Color.WHITE);
+        newButton.setFont(new Font("Helvetica", Font.BOLD, 20));
+        return newButton;
     }
 }

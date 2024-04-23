@@ -1,12 +1,13 @@
 /*
  * Ryan Williams
  * CEN 3024C-26663 Software Development I
- * 10 April 2024
+ * 23 April 2024
  * Comic.java
  * This class creates a JFrame that allows a user to edit a preexisting comic.
  */
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -47,7 +48,7 @@ public class EditFrame {
                 newFrame.setLocationRelativeTo(null);
                 newFrame.setResizable(true);
 
-                JPanel newPanel = new JPanel();
+                JPanel newPanel = new JPanel(new GridBagLayout());
 
                 final String editComic = comicName.getText();
                 frame.dispose();
@@ -61,41 +62,71 @@ public class EditFrame {
                     JOptionPane.showMessageDialog(frame, "Comic not found.");
                 }
                 else {
+                    Comic editedComic = DatabaseManager.comics.get(comicIndex);
                     try {
                         JLabel imageLabel;
-                        imageLabel = ComicFrame.loadImage(DatabaseManager.comics.get(comicIndex).getImagePath(),
+                        imageLabel = ComicFrame.loadImage(editedComic.getImagePath(),
                                 169, 300);
-                        newPanel.add(imageLabel);
+                        GridBagConstraints gbc = ComicFrame.addConstraints(1, 1, 1, 7);
+                        newPanel.add(imageLabel, gbc);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(frame, "Image not found.");
                     }
 
-                    JLabel titleLabel = new JLabel(DatabaseManager.comics.get(comicIndex).getTitle());
-                    newPanel.add(titleLabel);
-                    JLabel authorLabel = new JLabel("by " + DatabaseManager.comics.get(comicIndex).getAuthor());
-                    newPanel.add(authorLabel);
+                    JLabel titleLabel = new JLabel(editedComic.getTitle());
+                    GridBagConstraints gbc = ComicFrame.addConstraints(2, 1, 1, 1);
+                    newPanel.add(titleLabel, gbc);
+
+                    JLabel authorLabel = new JLabel("by " + editedComic.getAuthor());
+                    gbc = ComicFrame.addConstraints(2, 2, 1, 1);
+                    newPanel.add(authorLabel, gbc);
+
                     JLabel completedLabel = new JLabel("Completed: ");
-                    newPanel.add(completedLabel);
-                    JTextField newCompleted = new JTextField(5);
-                    newPanel.add(newCompleted);
+                    gbc = ComicFrame.addConstraints(2, 3, 1, 1);
+                    newPanel.add(completedLabel, gbc);
+
+                    String completedText = editedComic.getCompleted() ? "true" : "false";
+                    JTextField newCompleted = new JTextField(completedText, 5);
+                    gbc = ComicFrame.addConstraints(3, 3, 1, 1);
+                    newPanel.add(newCompleted, gbc);
+
                     JLabel ratingLabel = new JLabel("Rating:");
-                    newPanel.add(ratingLabel);
-                    JTextField newRating = new JTextField(3);
-                    newPanel.add(newRating);
-                    JLabel idLabel = new JLabel("ID: " + DatabaseManager.comics.get(comicIndex).getId());
-                    newPanel.add(idLabel);
+                    gbc = ComicFrame.addConstraints(2, 4, 1, 1);
+                    newPanel.add(ratingLabel, gbc);
+
+                    JTextField newRating = new JTextField(Integer.toString(editedComic.getRating()), 3);
+                    gbc = ComicFrame.addConstraints(3, 4, 1, 1);
+                    newPanel.add(newRating, gbc);
+
+                    JLabel idLabel = new JLabel("ID: " + editedComic.getId());
+                    gbc = ComicFrame.addConstraints(2, 5, 1, 1);
+                    newPanel.add(idLabel, gbc);
+
                     JLabel chapterLabel = new JLabel("Chapter ");
-                    newPanel.add(chapterLabel);
-                    JTextField newCurrentChapter = new JTextField(4);
-                    newPanel.add(newCurrentChapter);
+                    gbc = ComicFrame.addConstraints(2, 6, 1, 1);
+                    newPanel.add(chapterLabel, gbc);
+
+                    JTextField newCurrentChapter = new JTextField(Integer.toString(editedComic.getCurrentChapter()), 4);
+                    gbc = ComicFrame.addConstraints(3, 6, 1, 1);
+                    newPanel.add(newCurrentChapter, gbc);
+
                     JLabel slashLabel = new JLabel(" / ");
-                    newPanel.add(slashLabel);
-                    JTextField newTotalChapters = new JTextField(4);
-                    newPanel.add(newTotalChapters);
+                    gbc = ComicFrame.addConstraints(4, 6, 1, 1);
+                    newPanel.add(slashLabel, gbc);
+
+                    JTextField newTotalChapters = new JTextField(Integer.toString(editedComic.getTotalChapters()), 4);
+                    gbc = ComicFrame.addConstraints(5, 6, 1, 1);
+                    newPanel.add(newTotalChapters, gbc);
+
                     JLabel pinnedLabel = new JLabel("Pinned: ");
-                    newPanel.add(pinnedLabel);
-                    JTextField newPinned = new JTextField(5);
-                    newPanel.add(newPinned);
+                    gbc = ComicFrame.addConstraints(2, 7, 1, 1);
+                    newPanel.add(pinnedLabel, gbc);
+
+                    String pinnedText = editedComic.getPinned() ? "true" : "false";
+                    JTextField newPinned = new JTextField(pinnedText, 5);
+                    gbc = ComicFrame.addConstraints(3, 7, 1, 1);
+                    newPanel.add(newPinned, gbc);
+
                     JButton submit = new JButton("Submit");
 
                     // Edits the comic with the user-submitted values when "Submit" is pressed
@@ -141,7 +172,8 @@ public class EditFrame {
                             newFrame.dispose();
                         }
                     });
-                    newPanel.add(submit);
+                    gbc = ComicFrame.addConstraints(2, 8, 1, 1);
+                    newPanel.add(submit, gbc);
 
                     newFrame.add(newPanel);
                     newFrame.setVisible(true);

@@ -67,14 +67,17 @@ public class EditFrame {
                         JLabel imageLabel;
                         imageLabel = ComicFrame.loadImage(editedComic.getImagePath(),
                                 169, 300);
-                        GridBagConstraints gbc = ComicFrame.addConstraints(1, 1, 1, 7);
+                        GridBagConstraints gbc = ComicFrame.addConstraints(1, 1, 1, 6);
                         newPanel.add(imageLabel, gbc);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(frame, "Image not found.");
                     }
+                    JTextField newImagePath = new JTextField(editedComic.getImagePath(), 10);
+                    GridBagConstraints gbc = ComicFrame.addConstraints(1, 8, 1, 1);
+                    newPanel.add(newImagePath, gbc);
 
                     JLabel titleLabel = new JLabel(editedComic.getTitle());
-                    GridBagConstraints gbc = ComicFrame.addConstraints(2, 1, 1, 1);
+                    gbc = ComicFrame.addConstraints(2, 1, 1, 1);
                     newPanel.add(titleLabel, gbc);
 
                     JLabel authorLabel = new JLabel("by " + editedComic.getAuthor());
@@ -138,6 +141,12 @@ public class EditFrame {
                                 if (comic.getTitle().equals(editComic)) {
                                     comicIndex = DatabaseManager.comics.indexOf(comic);
                                 }
+                            }
+
+                            try {
+                                DatabaseManager.editComics(editComic, "image", newImagePath.getText());
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(frame, "Image not set.");
                             }
 
                             try {

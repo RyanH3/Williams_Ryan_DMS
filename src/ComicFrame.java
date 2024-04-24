@@ -87,8 +87,9 @@ public class ComicFrame {
      * @throws IOException If the image does not load from the given URL.
      */
     public static JLabel loadImage(String source, int width, int height) throws IOException {
-        URL url = new URL(source);
+        URL url = new URL("https://qph.cf2.quoracdn.net/main-qimg-1a4bafe2085452fdc55f646e3e31279c-lq");
         try {
+            url = new URL(source);
             BufferedImage image = ImageIO.read(url);
             Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
             return new JLabel(new ImageIcon(resizedImage));
@@ -101,12 +102,16 @@ public class ComicFrame {
      * Makes a JPanel with all the comics in it for the GUI to display.
      * @param comic Comic object to make the panel.
      * @return JPanel to be added to the Comic list.
-     * @throws IOException If the image is not found using the submitted link.
      */
-    public static JPanel printComic(Comic comic) throws IOException {
+    public static JPanel printComic(Comic comic) {
         JPanel newPanel = new JPanel(new GridBagLayout());
 
-        JLabel imageLabel = loadImage(comic.getImagePath(), 169, 300);
+        JLabel imageLabel = null;
+        try {
+            imageLabel = loadImage(comic.getImagePath(), 169, 300);
+        } catch (IOException e) {
+            imageLabel = new JLabel("Image not found");
+        }
         GridBagConstraints gbc = addConstraints(1, 1, 1, 5);
         newPanel.add(imageLabel, gbc);
 
@@ -137,7 +142,12 @@ public class ComicFrame {
         newPanel.add(chapterLabel, gbc);
 
         String pinPath = comic.getPinned() ? "https://static.vecteezy.com/system/resources/previews/021/494/531/original/push-pin-icon-in-gradient-colors-thumbtack-signs-illustration-png.png" : "https://upload.wikimedia.org/wikipedia/commons/5/59/Empty.png";
-        JLabel pinnedLabel = loadImage(pinPath, 32, 32);
+        JLabel pinnedLabel = null;
+        try {
+            pinnedLabel = loadImage(pinPath, 32, 32);
+        } catch (IOException e) {
+            pinnedLabel = new JLabel("N/A");
+        }
         gbc = addConstraints(3, 1, 1, 1);
         newPanel.add(pinnedLabel, gbc);
 

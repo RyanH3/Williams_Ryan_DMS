@@ -45,7 +45,7 @@ public class MainFrame {
                 try {
                     new ComicFrame();
                 } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    System.out.println("No image found.");
                 }
             }
         });
